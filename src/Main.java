@@ -34,7 +34,7 @@ public class Main {
 
         JTextArea textArea = new JTextArea();
 
-        frame. getContentPane().add(BorderLayout.CENTER, textArea);
+        frame.getContentPane().add(BorderLayout.CENTER, textArea);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, menubar);
         frame.setVisible(true);

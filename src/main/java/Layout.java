@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Layout {
 
@@ -11,7 +15,7 @@ public class Layout {
         //Create the frame
         JFrame frame = new JFrame("Param Finder");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(425, 250);
+        frame.setSize(450, 250);
         //frame.setLayout(new BorderLayout(20,15));
 
         //Create the components of the frame
@@ -40,15 +44,35 @@ public class Layout {
         //Create text area for inputting an iparam and another for pulling the data
         //from the xls file
         JTextField searchArea = new JTextField(30);
-        JLabel responseArea = new JLabel();
-        responseArea.setText("Iparam response");
+        JTextArea responseArea = new JTextArea();
+        responseArea.setSize(new Dimension(300,100));
+        responseArea.setText("iparam details will display here");
+        responseArea.setLineWrap(true);
+        responseArea.setWrapStyleWord(true);
+        //responseArea.setPreferredSize(new Dimension(400,50));
 
         searchPanel.add(searchArea);
         searchPanel.add(BorderLayout.SOUTH, responseArea);
 
+        //Add functionality for the search button
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Search query = new Search();
+                query.search(searchArea.getText());
+                if(query.getResponse().equals("")) {
+                    responseArea.setText("iparam not found");
+                    searchArea.grabFocus();
+                } else {
+                    responseArea.setText(query.getResponse());
+                }
+            }
+        });
+
         frame.getContentPane().add(BorderLayout.SOUTH, optionsPanel);
         frame.getContentPane().add(BorderLayout.NORTH, menubar);
         frame.getContentPane().add(BorderLayout.CENTER,searchPanel);
+        frame.getRootPane().setDefaultButton(searchButton);
         frame.setVisible(true);
     }
 }

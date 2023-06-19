@@ -41,6 +41,8 @@ public class Search {
 
                         if(row.getCell(2).getStringCellValue().equals("")) {
                             example = "No value required or custom param";
+                        } else {
+                            example = row.getCell(2).getStringCellValue();
                         }
 
                         setResponse(row.getCell(1).getStringCellValue() + '\n' +  '\n' + "Example"
@@ -66,6 +68,8 @@ public class Search {
 
                         if(row.getCell(2).getStringCellValue().equals("")) {
                             example = "No value required or custom param";
+                        } else {
+                            example = row.getCell(2).getStringCellValue();
                         }
 
                         setResponse(row.getCell(1).getStringCellValue() + '\n' +  '\n' + "Example"

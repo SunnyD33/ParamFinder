@@ -15,7 +15,7 @@ public class Layout {
         //Create the frame
         JFrame frame = new JFrame("Param Finder");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(450, 250);
+        frame.setSize(450, 275);
         //frame.setLayout(new BorderLayout(20,15));
 
         //Create the components of the frame
@@ -41,22 +41,16 @@ public class Layout {
         //Create search/response panel
         JPanel searchPanel = new JPanel();
 
-        //Create panel for iparam example
-        JPanel examplePanel = new JPanel();
-        JLabel exampleHeader = new JLabel();
-        exampleHeader.setText("Example");
-
-        examplePanel.add(exampleHeader);
 
         //Create text area for inputting an iparam and another for pulling the data
         //from the xls file
-        JTextField searchArea = new JTextField(30);
+        JTextField searchArea = new JTextField(25);
         JTextArea responseArea = new JTextArea();
-        responseArea.setSize(new Dimension(300,100));
+        responseArea.setSize(new Dimension(400,100));
         responseArea.setText("iparam details will display here");
         responseArea.setLineWrap(true);
         responseArea.setWrapStyleWord(true);
-        //responseArea.setPreferredSize(new Dimension(400,50));
+        responseArea.setEnabled(false);
 
         searchPanel.add(searchArea);
         searchPanel.add(BorderLayout.SOUTH, responseArea);
@@ -67,11 +61,12 @@ public class Layout {
             public void actionPerformed(ActionEvent e) {
                 Search query = new Search();
                 query.search(searchArea.getText());
-                if(query.getResponse().equals("")) {
-                    responseArea.setText("iparam not found");
-                    searchArea.grabFocus();
+                if(query.getResponse().equals("iparam not found")) {
+                    responseArea.setText(query.getResponse());
+                    searchArea.selectAll();
                 } else {
                     responseArea.setText(query.getResponse());
+                    searchArea.requestFocus();
                 }
             }
         });
@@ -79,7 +74,6 @@ public class Layout {
         frame.getContentPane().add(BorderLayout.SOUTH, optionsPanel);
         frame.getContentPane().add(BorderLayout.NORTH, menubar);
         frame.getContentPane().add(BorderLayout.CENTER,searchPanel);
-        frame.getContentPane().add(BorderLayout.WEST, examplePanel);
         frame.getRootPane().setDefaultButton(searchButton);
         frame.setVisible(true);
     }

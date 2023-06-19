@@ -23,13 +23,30 @@ public class Search {
 
         try (FileInputStream fileInputStream = new FileInputStream(getFileDestination())){
 
+            String category = "";
+            String example = "";
+
             if (getFileDestination().endsWith(".xlsx")) {
                 XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
                 XSSFSheet sheet = workbook.getSheetAt(0);
 
+
                 for (Row row : sheet) {
                     if (row.getCell(0).getStringCellValue().equalsIgnoreCase(iparam)) {
-                        setResponse(row.getCell(1).getStringCellValue());
+                        if(row.getCell(3).getStringCellValue().equals("Multiple Categories")) {
+                            category = "General";
+                        } else {
+                            category = row.getCell(3).getStringCellValue();
+                        }
+
+                        if(row.getCell(2).getStringCellValue().equals("")) {
+                            example = "No value required or custom param";
+                        }
+
+                        setResponse(row.getCell(1).getStringCellValue() + '\n' +  '\n' + "Example"
+                         +'\n' + row.getCell(0).getStringCellValue() + "               " +
+                                example + '\n' + '\n' + "Category: " +
+                                category);
                         break;
                     } else {
                         setResponse("iparam not found");
@@ -40,8 +57,21 @@ public class Search {
                 HSSFSheet sheet = workbook.getSheetAt(0);
 
                 for (Row row : sheet) {
-                    if (row.getCell(0).getStringCellValue().equals(iparam)) {
-                        setResponse(row.getCell(1).getStringCellValue());
+                    if (row.getCell(0).getStringCellValue().equalsIgnoreCase(iparam)) {
+                        if(row.getCell(3).getStringCellValue().equals("Multiple Categories")) {
+                            category = "General";
+                        } else {
+                            category = row.getCell(3).getStringCellValue();
+                        }
+
+                        if(row.getCell(2).getStringCellValue().equals("")) {
+                            example = "No value required or custom param";
+                        }
+
+                        setResponse(row.getCell(1).getStringCellValue() + '\n' +  '\n' + "Example"
+                                +'\n' + row.getCell(0).getStringCellValue() + "               " +
+                                example + '\n' + '\n' + "Category: " +
+                                category);
                         break;
                     } else {
                         setResponse("iparam not found");
@@ -51,7 +81,8 @@ public class Search {
 
         }
         catch (Exception e) {
-            showMessageDialog(null, "Cannot read file or file type is incorrect. \nPlease check file location and confirm" +
+            showMessageDialog(null, "Cannot read file or file type is incorrect. \nPlease check " +
+                    "file location and confirm" +
                     " that the extension is either .xlsx or .xls");
             setResponse("iparam not found");
         }

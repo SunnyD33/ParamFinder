@@ -41,6 +41,13 @@ public class Layout {
         //Create search/response panel
         JPanel searchPanel = new JPanel();
 
+        //Create panel for iparam example
+        JPanel examplePanel = new JPanel();
+        JLabel exampleHeader = new JLabel();
+        exampleHeader.setText("Example");
+
+        examplePanel.add(exampleHeader);
+
         //Create text area for inputting an iparam and another for pulling the data
         //from the xls file
         JTextField searchArea = new JTextField(30);
@@ -72,6 +79,7 @@ public class Layout {
         frame.getContentPane().add(BorderLayout.SOUTH, optionsPanel);
         frame.getContentPane().add(BorderLayout.NORTH, menubar);
         frame.getContentPane().add(BorderLayout.CENTER,searchPanel);
+        frame.getContentPane().add(BorderLayout.WEST, examplePanel);
         frame.getRootPane().setDefaultButton(searchButton);
         frame.setVisible(true);
     }

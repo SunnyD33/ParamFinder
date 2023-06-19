@@ -28,7 +28,7 @@ public class Search {
                 XSSFSheet sheet = workbook.getSheetAt(0);
 
                 for (Row row : sheet) {
-                    if (row.getCell(0).getStringCellValue().equals(iparam)) {
+                    if (row.getCell(0).getStringCellValue().equalsIgnoreCase(iparam)) {
                         setResponse(row.getCell(1).getStringCellValue());
                         break;
                     } else {

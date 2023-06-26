@@ -1,9 +1,12 @@
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 public class Layout {
 
@@ -22,8 +25,8 @@ public class Layout {
         JMenuBar menubar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         menubar.add(fileMenu);
-        JMenuItem fileItem1 = new JMenuItem("File Location");
-        fileMenu.add(fileItem1);
+        JMenuItem fileLocationMB = new JMenuItem("File Location");
+        fileMenu.add(fileLocationMB);
 
         //Create category dropdown
         JComboBox<String> categories = new JComboBox<>(category);
@@ -65,6 +68,22 @@ public class Layout {
                     searchArea.grabFocus();
                 } else {
                     responseArea.setText(query.getResponse());
+                }
+            }
+        });
+
+        //Add functionality for setting the file location
+        fileLocationMB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileDestination fd = new FileDestination();
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int fileLocation = fileChooser.showOpenDialog(frame);
+
+                if (fileLocation == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    fd.setFileDestination(file.toString());
                 }
             }
         });

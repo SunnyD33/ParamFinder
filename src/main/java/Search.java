@@ -13,7 +13,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class Search {
 
     private String response;
-    private String fileDestination = "./src/main/java/iparamListV2.xlsx"; //Hardcoded for testing only
 
     public void search(String iparam) {
         if(iparam.equals("")) {
@@ -21,12 +20,14 @@ public class Search {
             return;
         }
 
-        try (FileInputStream fileInputStream = new FileInputStream(getFileDestination())){
+        FileDestination fd = new FileDestination();
+
+        try (FileInputStream fileInputStream = new FileInputStream(fd.getFileDestination())){
 
             String category = "";
             String example = "";
 
-            if (getFileDestination().endsWith(".xlsx")) {
+            if (fd.getFileDestination().endsWith(".xlsx")) {
                 XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
                 XSSFSheet sheet = workbook.getSheetAt(0);
 
@@ -54,7 +55,7 @@ public class Search {
                         setResponse("iparam not found");
                     }
                 }
-            } else if (getFileDestination().endsWith("xls")) {
+            } else if (fd.getFileDestination().endsWith("xls")) {
                 HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
                 HSSFSheet sheet = workbook.getSheetAt(0);
 
@@ -99,13 +100,5 @@ public class Search {
 
     public String getResponse() {
         return response;
-    }
-
-    public void setFileDestination(String FD) {
-        this.fileDestination = FD;
-    }
-
-    public String getFileDestination() {
-        return fileDestination;
     }
 }

@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,14 +28,15 @@ public class Layout {
         JMenuBar menubar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
 
-        JMenu aboutMenu = new JMenu("About");
+        JMenu helpMenu = new JMenu("Help");
         menubar.add(fileMenu);
-        menubar.add(aboutMenu);
+        menubar.add(helpMenu);
 
         //Add options to menu
         JMenuItem fileLocationMB = new JMenuItem("File Location");
-        JMenuItem openFile = new JMenuItem("Open File");
+        JMenuItem about = new JMenuItem("About");
         fileMenu.add(fileLocationMB);
+        helpMenu.add(about);
 
         //Create category dropdown
         JComboBox<String> categories = new JComboBox<>(category);
@@ -104,26 +107,10 @@ public class Layout {
         });
 
         //Add functionality for opening the file
-        openFile.addActionListener(new ActionListener() {
+        about.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FileDestination fd = new FileDestination();
-                File file = new File(fd.getFileDestination());
-
-                //first check if Desktop is supported by Platform or not
-                if(!Desktop.isDesktopSupported()){
-                    System.out.println("Desktop is not supported");
-                    return;
-                }
-
-                Desktop desktop = Desktop.getDesktop();
-                if(file.exists()) {
-                    try {
-                        desktop.open(file);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
+                new About();
             }
         });
 

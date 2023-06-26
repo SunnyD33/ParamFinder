@@ -9,6 +9,8 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class Layout {
 
     Layout() {
@@ -89,6 +91,12 @@ public class Layout {
                 if (fileLocation == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
                     fd.setFileDestination(file.toString());
+
+                    showMessageDialog(null, "File changed!");
+
+                    searchArea.setText("");
+                    responseArea.setText("iparam details will display here");
+                    searchArea.requestFocus();
                 }
             }
         });

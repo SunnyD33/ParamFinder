@@ -27,13 +27,14 @@ public class Layout {
         //Create the components of the menu
         JMenuBar menubar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
+        JMenu aboutMenu = new JMenu("About");
         menubar.add(fileMenu);
+        menubar.add(aboutMenu);
 
         //Add options to menu
         JMenuItem fileLocationMB = new JMenuItem("File Location");
         JMenuItem openFile = new JMenuItem("Open File");
         fileMenu.add(fileLocationMB);
-        fileMenu.add(openFile);
 
         //Create category dropdown
         JComboBox<String> categories = new JComboBox<>(category);

@@ -1,15 +1,9 @@
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
-
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Layout {
 
@@ -24,17 +18,12 @@ public class Layout {
         frame.setSize(450, 275);
         //frame.setLayout(new BorderLayout(20,15));
 
-        //Create the components of the menu
+        //Create the components of the frame
         JMenuBar menubar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
-        JMenu aboutMenu = new JMenu("About");
         menubar.add(fileMenu);
-        menubar.add(aboutMenu);
-
-        //Add options to menu
-        JMenuItem fileLocationMB = new JMenuItem("File Location");
-        JMenuItem openFile = new JMenuItem("Open File");
-        fileMenu.add(fileLocationMB);
+        JMenuItem fileItem1 = new JMenuItem("File Location");
+        fileMenu.add(fileItem1);
 
         //Create category dropdown
         JComboBox<String> categories = new JComboBox<>(category);
@@ -78,52 +67,6 @@ public class Layout {
                 } else {
                     responseArea.setText(query.getResponse());
                     searchArea.requestFocus();
-                }
-            }
-        });
-
-        //Add functionality for setting the file location
-        fileLocationMB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FileDestination fd = new FileDestination();
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-                int fileLocation = fileChooser.showOpenDialog(frame);
-
-                if (fileLocation == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
-                    fd.setFileDestination(file.toString());
-
-                    showMessageDialog(null, "File changed!");
-
-                    searchArea.setText("");
-                    responseArea.setText("iparam details will display here");
-                    searchArea.requestFocus();
-                }
-            }
-        });
-
-        //Add functionality for opening the file
-        openFile.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FileDestination fd = new FileDestination();
-                File file = new File(fd.getFileDestination());
-
-                //first check if Desktop is supported by Platform or not
-                if(!Desktop.isDesktopSupported()){
-                    System.out.println("Desktop is not supported");
-                    return;
-                }
-
-                Desktop desktop = Desktop.getDesktop();
-                if(file.exists()) {
-                    try {
-                        desktop.open(file);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
                 }
             }
         });
